@@ -1,0 +1,78 @@
+﻿@model BasketballManager2000.Data.Member
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Member</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Role)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Role)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+    </dl>
+
+    <div>
+        <h4>Games Paid For</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Game Date
+                    </th>
+                    <th>
+                        Venue
+                    </th>
+                    <th>
+                        Amount Paid
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PaidForGames)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GameDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Venue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PaidAmount)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-controller="Games" asp-route-id="@item.GameId">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><b>Total: @Model.PaidForGames.Sum(g => g.PaidAmount).ToString("C")</b></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MemberId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
